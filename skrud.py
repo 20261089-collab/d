@@ -129,7 +129,7 @@ with col_info:
         # 이름의 마지막 글자에 받침이 있는지 확인하여 '이'를 붙여주는 센스 기능!
         last_char = name[-1]
         if (ord(last_char) - 0xAC00) % 28 > 0:
-            name_with_josa = f"{name}이"
+            name_with_josa = f"{name}님"
         else:
             name_with_josa = name
         
