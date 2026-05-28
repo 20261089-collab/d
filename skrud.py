@@ -124,16 +124,25 @@ with col_char:
         st.write("GitHub에 이미지 파일을 올려주세요!")
 
 with col_info:
-    st.subheader(f"🐲 {name if name else '사용자'}님의 수룡이")
-    if status_color == "info":
-        st.info(suryong_msg)
-    elif status_color == "error":
-        st.error(suryong_msg)
-    elif status_color == "warning":
-        st.warning(suryong_msg)
+    # 📛 이름 입력 여부에 따라 상단 타이틀 문구를 자동으로 바꾸는 로직
+    if name:
+        # 이름의 마지막 글자에 받침이 있는지 확인하여 '이'를 붙여주는 센스 기능!
+        last_char = name[-1]
+        if (ord(last_char) - 0xAC00) % 28 > 0:
+            name_with_josa = f"{name}이"
+        else:
+            name_with_josa = name
+        
+        st.subheader(f"🐲 {name_with_josa}의 수룡이")
     else:
-        st.success(suryong_msg)
-
+        st.subheader("🐲 사용자님의 수룡이")
+        
+    # 상태 메시지 출력 (칼로리에 따른 수룡이의 한마디)
+    if status_color == "info": st.info(suryong_msg)
+    elif status_color == "error": st.error(suryong_msg)
+    elif status_color == "warning": st.warning(suryong_msg)
+    else: st.success(suryong_msg)
+    
     st.metric("목표 칼로리", f"{daily_calorie} kcal")
     st.metric("현재 섭취량", f"{total} kcal", delta=total - daily_calorie, delta_color="inverse")
 
