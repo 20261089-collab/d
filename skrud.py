@@ -150,11 +150,34 @@ with tab1:
 
 with tab2:
     exercise_time = st.slider("운동 시간 선택(분)", 10, 120, 30, key="ex_slider")
-    # 기존 운동 로직과 동일
+    
+    # 사용자가 입력한 시간에 맞춰 실시간으로 분배되는 운동 로직
     if goal == "감량":
-        exercise = "유산소 20분 + 스쿼트 30개" if exercise_time < 40 else "러닝 30분 + 플랭크 2분"
+        if exercise_time <= 20:
+            exercise = f"빠르게 걷기 {exercise_time}분 (가볍게 땀 흘리기!)"
+        elif exercise_time <= 40:
+            cardio = exercise_time - 10
+            exercise = f"유산소 번갈아 뛰기 {cardio}분 + 스쿼트 20개 + 플랭크 1분"
+        else:
+            cardio = exercise_time - 20
+            exercise = f"러닝 {cardio}분 + 스쿼트 30개 + 런지 20개 + 플랭크 2분"
+            
     elif goal == "근육증가":
-        exercise = "스쿼트 50개 + 푸쉬업 30개" if exercise_time < 40 else "근력운동 60분"
-    else:
-        exercise = "산책 20분" if exercise_time < 40 else "걷기 30분 + 요가 20분"
-    st.info(f"추천 운동: {exercise}")
+        if exercise_time <= 20:
+            half = exercise_time // 2
+            exercise = f"스쿼트 {half}분 + 푸쉬업 {half}분 (맨몸 근력 집중!)"
+        elif exercise_time <= 40:
+            exercise = f"스쿼트 30개 + 푸쉬업 20개 + 런지 20개 (남은 시간은 스트레칭!)"
+        else:
+            exercise = f"부위별 웨이트 트레이닝 {exercise_time - 10}분 + 전신 스트레칭 10분"
+            
+    else: # 유지 목표
+        if exercise_time <= 20:
+            exercise = f"가벼운 전신 스트레칭 및 제자리 걷기 {exercise_time}분"
+        elif exercise_time <= 40:
+            exercise = f"동네 가볍게 산책하기 {exercise_time - 10}분 + 요가 10분"
+        else:
+            exercise = f"빠르게 걷기 {exercise_time - 15}분 + 마무리 스트레칭 15분"
+            
+    st.info(f"🏃 {name if name else '사용자'}님을 위한 {exercise_time}분 맞춤 운동 가이드")
+    st.success(f"추천 루틴: {exercise}")
