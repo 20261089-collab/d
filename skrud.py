@@ -37,7 +37,7 @@ foods = {
 }
 
 # 앱 제목
-st.title("🐉 수룡이 다이어트 메이트")
+st.title("🐉 핏메이트")
 st.caption("내가 먹는 음식에 따라 수룡이의 모습이 변해요!")
 
 st.divider()
